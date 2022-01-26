@@ -1,0 +1,24 @@
+/* Q1 */
+
+SELECT f.title
+FROM film f
+JOIN film_actor fa on fa.film_id = f.film_id
+WHERE fa.actor_id IN (105,122)
+GROUP BY f.film_id
+HAVING COUNT(*) = 2
+ORDER BY f.title ASC
+
+
+
+/* Q2 */
+
+SELECT B.title
+FROM
+  (SELECT A.film_id FROM film_actor AS A
+  WHERE A.actor_id=105
+  INTERSECT
+  SELECT A.film_id FROM film_actor AS A
+  WHERE A.actor_id=122) AS SQ
+  INNER JOIN film AS B
+ON SQ.film_id=B.film_id
+ORDER BY title;

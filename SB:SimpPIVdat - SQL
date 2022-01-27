@@ -1,0 +1,11 @@
+
+CREATE extension tablefunc;
+SELECT *
+FROM  crosstab(
+      'SELECT A.name, B.detail, COUNT(B.id)
+      FROM products as A
+      INNER JOIN details as B
+      ON A.id = B.product_id
+      GROUP BY A.name, B.detail
+      ORDER BY 1,2')
+AS ct (name TEXT, bad BIGINT, good BIGINT, ok BIGINT)

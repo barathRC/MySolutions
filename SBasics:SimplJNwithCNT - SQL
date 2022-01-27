@@ -1,0 +1,6 @@
+SELECT A.*, COUNT(B.name) AS toy_count
+FROM
+people as A INNER JOIN toys as B
+ON A.id=B.people_id
+GROUP BY A.id 
+ORDER BY A.id ASC;

@@ -1,0 +1,26 @@
+CREATE OR REPLACE VIEW 
+members_approved_for_voucher AS
+WITH mafv AS (
+  SELECT A.department_id,
+  SUM(B.price) FROM sales AS A
+  INNER JOIN products AS B 
+  ON A.product_id = B.id
+  GROUP BY A.department_id
+  HAVING SUM(B.price) > 10000
+  )
+
+SELECT A.member_id AS id, C.name, C.email,
+SUM(B.price) AS total_spending 
+FROM sales AS A
+INNER JOIN products AS B 
+ON A.product_id = B.id
+INNER JOIN members AS C 
+ON A.member_id = C.id
+WHERE A.department_id
+IN (SELECT department_id FROM mafv)
+GROUP BY (A.member_id, C.name, C.email)
+HAVING SUM(B.price) > 1000
+ORDER BY A.member_id ASC;
+  
+SELECT id, name, email, total_spending 
+FROM members_approved_for_voucher;

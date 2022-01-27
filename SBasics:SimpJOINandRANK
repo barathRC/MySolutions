@@ -1,0 +1,9 @@
+select 
+A.*, 
+count(B.sale) as sale_count,
+rank() over (order by count(B.sale))
+as sale_rank
+from 
+people AS A left join sales AS B
+on A.id = B.people_id
+group by A.id

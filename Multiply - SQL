@@ -1,1 +1,4 @@
+SELECT CAST(price AS FLOAT) * CAST(amount AS FLOAT) AS total FROM items;
+
+
 SELECT  (price * amount) as total FROM items
